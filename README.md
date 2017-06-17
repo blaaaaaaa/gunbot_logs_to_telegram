@@ -6,12 +6,15 @@ Python 2 Script to send most recent GUNBOT trading logs changes (the most recent
 Dependencies:
 
 python-telegram-bot
+
 watchdog
 
 https://pypi.python.org/pypi/watchdog
+
 pip install watchdog
 
 https://github.com/python-telegram-bot/python-telegram-bot
+
 pip install python-telegram-bot --upgrade
 
 
