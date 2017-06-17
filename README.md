@@ -23,4 +23,7 @@ Edit "telegram_bot_token" to your telegram bot token you got from BotFather. (Ta
 
 Edit "folder_to_watch folder" to your GUNBOT Folder containg the *-trades.txt files. Or if you run several at once you can put in a parent folder.
 
+Run: 
+python gunbot_logs_to_telegram.py
+
 Tested on windows so far.
