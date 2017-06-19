@@ -6,9 +6,9 @@ import telegram
 import threading
 import os
 
-telegram_bot_token = ""  # put in the bot id
+telegram_bot_token = ""  # put in the bot token
 telegram_your_id = ""  # put in your chat id
-folder_to_watch = ""  # Your GUNBOT Folder or parent folder from multiple GUNBOTS e.g "C:\Users\Jens\Desktop\GUNBOT_3"  ; leave blank for directory where this file is.
+folder_to_watch = ""  # Your GUNBOT Folder or parent folder from multiple GUNBOTS e.g "C:\Users\Myself\Desktop\GUNBOT_3"  ; leave blank for directory where this file is.
 
 if folder_to_watch == "":
     folder_to_watch = os.path.dirname(os.path.abspath(__file__))
@@ -23,7 +23,7 @@ class MyHandler(PatternMatchingEventHandler):
 
     def process(self, event):
         if event.is_directory is False and event.event_type in ["modified", "created", "moved"]:
-            print("Event in %s detected" % event.src_path)
+            # print("Event in %s detected" % event.src_path)
             # line = subprocess.check_output(['tail', '-1', event.src_path])
             # print(line)
             with open(event.src_path, 'r') as f:
@@ -52,9 +52,10 @@ def watch_folder(folder, queue):
         pass
 
 
-def bot_message_loop(bot, telegram_your_id):
+def bot_message_loop(telegram_bot_token, telegram_your_id):
     global queue
     messages_so_far = set()
+    bot = telegram.Bot(token=telegram_bot_token)
     bot.send_message(chat_id=telegram_your_id, text="Bot started now!")
     while True:
         message, data = queue.get()
@@ -62,11 +63,12 @@ def bot_message_loop(bot, telegram_your_id):
             messages_so_far.add(message)
             print("Sending message %s" % message + "\nEstimate Total: %s %s\nExchange: %s" % (
                 str(message_to_total_estimate(message)), data["primary_pair"], data["exchange"]))
+            bot = telegram.Bot(token=telegram_bot_token)
             bot.send_message(chat_id=telegram_your_id, text=message + "\nEstimate Total: %s %s\nExchange: %s" % (
                 str(message_to_total_estimate(message)), data["primary_pair"], data["exchange"]))
 
 
-def tail(f, window=20):
+def tail(f, window=25):
     """
     Returns the last `window` lines of file `f` as a list.
     """
@@ -139,9 +141,8 @@ def get_attributes_from_logfilename(path):
 def main():
     global queue
     queue = Queue.Queue()
-    bot = telegram.Bot(token=telegram_bot_token)
     message_thread = threading.Thread(target=bot_message_loop,
-                                      kwargs={"bot": bot, "telegram_your_id": telegram_your_id})
+                                      kwargs={"telegram_bot_token": telegram_bot_token, "telegram_your_id": telegram_your_id})
     message_thread.start()
     watch_folder(folder_to_watch, queue)
 
