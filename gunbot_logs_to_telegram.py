@@ -8,7 +8,7 @@ import os
 
 telegram_bot_token = ""  # put in the bot id
 telegram_your_id = ""  # put in your chat id
-folder_to_watch = "C:\Users\Jens\Desktop"  # Your GUNBOT Folder or parent folder from multiple GUNBOTS e.g "C:\Users\Jens\Desktop\GUNBOT_3"  ; leave blank for directory where this file is.
+folder_to_watch = ""  # Your GUNBOT Folder or parent folder from multiple GUNBOTS e.g "C:\Users\Jens\Desktop\GUNBOT_3"  ; leave blank for directory where this file is.
 
 if folder_to_watch == "":
     folder_to_watch = os.path.dirname(os.path.abspath(__file__))
