@@ -3,6 +3,8 @@ Gunbot trading bot trade logs send to telegram bot.
 
 Python 2 Script to send most recent GUNBOT trading logs changes (the most recent trade) to your telegram bot.
 
+GUNBOT: https://bitcointalk.org/index.php?topic=1715214.0
+
 Dependencies:
 
 python-telegram-bot
